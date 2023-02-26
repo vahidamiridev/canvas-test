@@ -44,12 +44,11 @@ section{
   align-items: center;
   margin-bottom: 10px;
 }
-.option:is(:hover , .active) img{
-  color: #4A98F7;
-
+.option:is(:hover, .active) img{
+  filter:invert(17%) sepia(90%) saturate(3000%) hue-rotate(900deg) brightness(100%) contrast(100%);
 }
 
-.option :where(span  , label){
+.option:where(span, label){
   color: #5A6168;
   cursor: pointer;
   padding-left: 10px;
@@ -82,20 +81,20 @@ section{
 
 }
 .colors .option:nth-child(1){
-  background: #fff;
+  background-color: #fff;
   border: 1px solid #bfbfbf;
 }
 .colors .option:nth-child(2){
-  background: #000;
+  background-color: #000;
 }
 .colors .option:nth-child(3){
-  background: #e02020;
+  background-color: #e02020;
 }
 .colors .option:nth-child(4){
-  background: #6dd400;
+  background-color: #6dd400;
 }
 .colors .option:nth-child(5){
-  background: #4a98f7;
+  background-color: #4a98f7;
 }
 
 .colors .option.selected::before{
@@ -112,7 +111,7 @@ section{
 
 }
 
-.colors .option:first-child.selected:before{
+.colors .option:first-child.selected::before{
   border-color: #ccc;
 }
 .option #color-picker{
@@ -160,6 +159,4 @@ section{
   height: 100%;
 }
 
-.main-options .options .active{
-  color:#6dd400;
-}
+

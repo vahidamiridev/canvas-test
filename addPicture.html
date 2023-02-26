@@ -26,13 +26,17 @@
             <img src="icons/triangle.svg" alt="">
             <span>Triangle</span>
           </li>
+          <li class="option tool" id="line">
+            <img src="icons/line.svg" alt="">
+            <span>Line</span>
+          </li>
           <li class="option">
             <input type="checkbox" id="fill-color">
             <label for="fill-color">Fill color</label>
           </li>
         </ul>
       </div>
-      <div class="row main-options">
+      <div class="row">
         <label for="" class="title">Options</label>
         <ul class="options">
           <li class="option active tool" id="brush">
@@ -45,7 +49,7 @@
           </li>
     
           <li class="option">
-            <input type="range" id="sixe-slider">
+            <input type="range" id="size-slider" min="1" max="15" value="2">
           </li>
         </ul>
       </div>
@@ -70,9 +74,5 @@
         <canvas></canvas>
     </section>
   </div>
-
-
-
- 
 </body>
 </html>
