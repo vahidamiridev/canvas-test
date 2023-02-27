@@ -9,7 +9,7 @@ body{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #4A98F7;
+  background: #f7cf4a;
 
 }
 .container{
@@ -26,7 +26,7 @@ section{
 
 }
 .tools-board{
-  width: 210px;
+  width: 170px;
   padding: 15px 22px 0;
   height: 100vh;
 
@@ -136,18 +136,18 @@ section{
 
 
 .buttons .clear-canvas{
-    color: #6c757d;
-    border:1px solid #6c757d;
+    color: #454546;
+    border:1px solid #0669c0;
     transition: all 0.3s ease;
 
 }
-.clear-canvas:hover{
+/* .clear-canvas:hover{
   color:#fff;
-  background: #6c757d;
-}
+  background: #5f5f5f;
+} */
 .buttons .save-img{
-    background: #4A98f7;
-    border:1px solid #4A98f7;
+    background: #00941b;
+    border:1px solid #00941b;
 
 }
 
@@ -157,6 +157,21 @@ section{
   border:1px solid #4af76a;
 
 }
+.buttons .undo{
+  color: #000;
+  background: #f7cf4a;
+  border:1px solid #f7cf4a;
+
+}
+.buttons .move-item{
+  color: #000;
+  background-color: #1ae6e6;
+}
+.buttons .draw-again{
+  color: #000;
+  background-color: #e61adc;
+}
+
 
 
 

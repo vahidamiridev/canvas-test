@@ -7,15 +7,23 @@ const canvas = document.querySelector('canvas'),
       clearCanvas = document.querySelector('.clear-canvas'),
       saveImg = document.querySelector('.save-img'),
       changeImg = document.querySelector('.change-background'),
+      undoBtn = document.querySelector('.undo'),
+      moveItem = document.querySelector('.move-item'),
+      drawAgain = document.querySelector('.draw-again'),
+
       ctx = canvas .getContext("2d")
 
      
 
 let prevMouseX,prevMouseY,snapshot, 
     isDrawing = false ,
-    brushWidth=3,
+    brushWidth=5,
     selectedTool = 'brush' ,
-    selectedColor = '#000';
+    selectedColor = '#000',
+    restore_arrray = [],
+    index = -1,
+    isHand=false
+
 
 
     const setCanvasBackground =()=>{
@@ -74,19 +82,26 @@ const drawTriangle = (e)=>{
 
 
 const startDraw = (e)=>{
-  isDrawing = true 
-  prevMouseX = e.offsetX ; //passing current mouseX position as prevMouseX value
-  prevMouseY = e.offsetY  ; //passing current mouseY position as prevMouseY value
-  ctx.beginPath();// creating new path to drow
-  ctx.lineWidth = brushWidth  //passing brush size as line width
-  ctx.strokeStyle = selectedColor; //passing selectedColor as strok style
-  ctx.fillStyle = selectedColor;// passing selectedColor as fill style
-  //coping canvas data & passing as snapshot value .. this avoids draging the image
-  snapshot = ctx.getImageData(0,0,canvas.width,canvas.height)
-}
+  if(isHand)return
+    isDrawing = true 
+    prevMouseX = e.offsetX ; //passing current mouseX position as prevMouseX value
+    prevMouseY = e.offsetY  ; //passing current mouseY position as prevMouseY value
+    ctx.beginPath();// creating new path to drow
+    ctx.lineWidth = brushWidth  //passing brush size as line width
+    ctx.strokeStyle = selectedColor; //passing selectedColor as strok style
+    ctx.fillStyle = selectedColor;// passing selectedColor as fill style
+    //coping canvas data & passing as snapshot value .. this avoids draging the image
+    snapshot = ctx.getImageData(0,0,canvas.width,canvas.height)
+  
+  }
+
 
 const drawing = (e) =>{
+  if(isHand) return
+
   if(!isDrawing) return //if isDrawing is false return from here
+
+
   ctx.putImageData(snapshot,0,0)  //adding copied canvas data on ro this canvas
 
   if(selectedTool === "brush" ||  selectedTool === "eraser" ){
@@ -106,8 +121,16 @@ const drawing = (e) =>{
     drawCircle(e);
   }else if(selectedTool === "line"){
     drawLine(e);
-  } else{
+  } else if(selectedTool === "triangle"){
     drawTriangle(e);
+  }else if(selectedTool === "marker"){
+        
+        ctx.strokeStyle = ctx.strokeStyle+80
+        ctx.lineWidth = 25
+        ctx.lineTo(e.offsetX , e.offsetY)// creating line according to the mouse pointer
+        ctx.stroke();  //drawing /filling line with color
+   }else{
+    console.log('Do Not select tools')
   }
 }
 
@@ -116,7 +139,11 @@ const drawing = (e) =>{
 
 
 const stopDraw=()=>{
+  if(isHand) return
   isDrawing=false
+  restore_arrray.push(ctx.getImageData(0,0,canvas.width,canvas.height))
+  index +=1
+      console.log(restore_arrray)
 }
 
 
@@ -151,11 +178,14 @@ colorPicker.addEventListener("change" , ()=>{
 })
 
 
+const clearCanvasHandler =()=>{
+  ctx.clearRect(0,0,canvas.width , canvas.height) // clearing whole canvas
+  setCanvasBackground();
+  restore_arrray = []
+  index =-1
+}
 
-clearCanvas.addEventListener('click' , ()=>{
-      ctx.clearRect(0,0,canvas.width , canvas.height) // clearing whole canvas
-      setCanvasBackground();
-});
+clearCanvas.addEventListener('click' , clearCanvasHandler);
 
 
 
@@ -168,10 +198,49 @@ saveImg.addEventListener('click' , ()=>{
 
 
 
-el.addEventListener('touchstart', startDraw);
-el.addEventListener('touchend', stopDraw);
-el.addEventListener('touchcancel', stopDraw);
-el.addEventListener('touchmove', drawing);
+
+const undoLast =()=>{
+    if(index <= 0 ){
+      clearCanvasHandler()
+
+    }else{
+      index -=1
+      restore_arrray.pop()
+      ctx.putImageData(restore_arrray[index] , 0,0)
+    }
+  
+}
+
+
+
+
+
+moveItem.addEventListener('click' , ()=>isHand = true)
+drawAgain.addEventListener('click' ,()=>isHand = false);
+
+
+
+undoBtn.addEventListener('click' ,undoLast);
+
+canvas.addEventListener('touchstart', startDraw);
+canvas.addEventListener('touchend', stopDraw);
+canvas.addEventListener('touchcancel', stopDraw);
+canvas.addEventListener('touchmove', drawing);
 canvas.addEventListener("mousedown" , startDraw);
 canvas.addEventListener("mousemove" , drawing);
 canvas.addEventListener("mouseup" , stopDraw);
+
+
+
+
+const startForMoving = (e) =>{
+// e.preventDefault()
+
+  let startX =parseInt(e.clientX) 
+  let startY = parseInt(e.clientY) 
+
+
+
+
+
+}
