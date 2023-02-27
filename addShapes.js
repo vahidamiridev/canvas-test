@@ -6,6 +6,7 @@ const canvas = document.querySelector('canvas'),
       colorPicker = document.querySelector('#color-picker'),
       clearCanvas = document.querySelector('.clear-canvas'),
       saveImg = document.querySelector('.save-img'),
+      changeImg = document.querySelector('.change-background'),
       ctx = canvas .getContext("2d")
 
      
@@ -27,7 +28,7 @@ let prevMouseX,prevMouseY,snapshot,
 
 window.addEventListener("load",()=>{
   //setting canvas width/height ..offsetwidth /height returns viewable width/height of an element
-    canvas.width = canvas.offsetWidth;
+  canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     setCanvasBackground();
 })
@@ -91,6 +92,12 @@ const drawing = (e) =>{
   if(selectedTool === "brush" ||  selectedTool === "eraser" ){
     //if selected tool is eraser then set stroleStyle to white 
     ctx.strokeStyle = selectedTool === "eraser" ? '#fff' : selectedColor;
+    if(selectedTool === 'eraser'){
+
+        setTimeout(() => {
+            ctx.lineWidth = 100
+        }, 2000);
+    }
     ctx.lineTo(e.offsetX , e.offsetY)// creating line according to the mouse pointer
       ctx.stroke();  //drawing /filling line with color
   } else if(selectedTool === "rectangle"){
@@ -159,6 +166,12 @@ saveImg.addEventListener('click' , ()=>{
     link.click(); //clicking link to download image
 });
 
+
+
+el.addEventListener('touchstart', startDraw);
+el.addEventListener('touchend', stopDraw);
+el.addEventListener('touchcancel', stopDraw);
+el.addEventListener('touchmove', drawing);
 canvas.addEventListener("mousedown" , startDraw);
 canvas.addEventListener("mousemove" , drawing);
 canvas.addEventListener("mouseup" , stopDraw);
