@@ -18,33 +18,39 @@
     </style>
 
     <script>
-          let mainSrc;
+          let sizeOfImage={width:0,height:0};
+          let img ; 
 
       $(function () {
 
         const inputImage = document.getElementById('input-img')
 
         inputImage.addEventListener('change', (e) => {
-          const reader = new FileReader()
-          // mainSrc = e.target.value
-          // let splitedMainSrc = mainSrc.split('\\')
-          // mainSrc = './' + splitedMainSrc[splitedMainSrc.length-1]
-          reader.readAsDataURL(inputImage.files[0])
-          reader.onload = (e) => {
-            const image = new Image()
-            image.src = e.target.result
-            image.onload = () => {
+          let files = inputImage.files
+
+               const reader = new FileReader()
+               reader.readAsDataURL(inputImage.files[0])
+               reader.onload = (e) => {
+               const image = new Image()
+              image.src = e.target.result
+              img = image
+              image.onload = () => {
               const { height, width } = image
-            console.log(width,height)
+              sizeOfImage.width = (width > 600) ? 500 : width;
+              sizeOfImage.height =  (height > 600) ? 500 : height;
+              ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+               ctx.drawImage(image, 0, 0 , sizeOfImage.width , sizeOfImage.height)
+
             }
           }
         })
         
-        var img = new Image()
-        img.src = './slidernew2.jpg'
-        img.onload = function () {
-          ctx.drawImage(img, 0, 0)
-        }
+        // var img = new Image()
+        // // img.src = './slidernew2.jpg'
+        // img.src = './slidernew2.jpg'
+        // img.onload = function () {
+        //   ctx.drawImage(img, 0, 0)
+        // }
 
 
 
@@ -83,13 +89,13 @@
           canMouseY = parseInt(e.clientY - offsetY)
           // if the drag flag is set, clear the canvas and draw the image
           if (isDragging) {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-            ctx.drawImage(
+              ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+              ctx.drawImage(
               img,
               canMouseX - 128 / 2,
               canMouseY - 120 / 2,
-              509,
-              339,
+              sizeOfImage.width,
+              sizeOfImage.height,
             )
           }
         }
