@@ -6,7 +6,7 @@
 }
 body{
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   min-height: 100vh;
   background: #f7cf4a;
@@ -15,6 +15,7 @@ body{
 .container{
     display: flex;
     width: 100%;
+    height: 100vh;
     gap: 10px;
     padding: 10px;
     /* max-width: 1050px; */
@@ -26,9 +27,9 @@ section{
 
 }
 .tools-board{
-  width: 170px;
+  width: 200px;
   padding: 15px 22px 0;
-  height: 100vh;
+  height: 100%;
 
 }
 .tools-board .row{
@@ -135,6 +136,8 @@ section{
 }
 
 
+
+
 .buttons .clear-canvas{
     color: #454546;
     border:1px solid #0669c0;
@@ -169,18 +172,38 @@ section{
 }
 .buttons .draw-again{
   color: #000;
-  background-color: #e61adc;
+  background-color: #1ae6e6;
 }
-
-
+.buttons #label-add-picture{
+  display: block;
+  background-color: gray;
+  margin-top: 5rem 0;
+  padding: 1rem 2rem;
+    border: 1px solid greenyellow;
+    color: #000;
+    width: 100%;
+    cursor: pointer;
+}
 
 
 .drawing-board{
   flex: 1;
 
 }
-.drawing-board canvas{
+.drawing-board #canvas-1{
   width:100% ;
   height: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+
+.drawing-board #canvas-2{
+  border:10px solid rgb(15, 255, 87);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 20;
+
 }
 

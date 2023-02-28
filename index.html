@@ -74,14 +74,20 @@
           <button class="save-img">Save As Image</button>
           <button class="undo">Undo</button>
           <button class="move-item">
-            <img src="../../icons/hand.svg" alt="">
+            <img src="../../icons/move.svg" alt="">
           </button>
-          <button class="draw-again">Draw</button>
+          <button class="draw-again">
+            <img src="../../icons/paint.svg" alt="">
+          </button>
+          <label for="input-img" id="label-add-picture"> Add Picture</label>
+          <input id="input-img" type="file" accept=".jpg, .jpeg, .png"  style="display:none"/>
 
       </div>
     </section>
     <section class="drawing-board">
-        <canvas></canvas>
+        <canvas id="canvas-1">
+          <canvas id="canvas-2 " width="500" height="500"></canvas>
+        </canvas>
     </section>
   </div>
 
